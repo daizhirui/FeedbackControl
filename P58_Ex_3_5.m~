@@ -8,7 +8,7 @@ figure(1)
 loglog(w,squeeze(mag));             % log-log plot of amplitude
 hold on;
 figure(2)
-semilogx(w,squeeze(phase));       % semi log plot of phase
+semilogx(w,squeeze(phase));      %
 hold on;
 figure(3)
 step(sysH);
