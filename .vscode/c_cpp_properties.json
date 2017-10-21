@@ -28,6 +28,7 @@
         {
             "name": "Mac",
             "includePath": [
+                "/Applications/CamelStudio.app/Contents/MacOS/include/M2",
                 "/usr/include",
                 "/usr/local/include",
                 "${workspaceRoot}"

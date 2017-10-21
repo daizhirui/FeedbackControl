@@ -1,13 +1,13 @@
 TECH = M2
-COMPILER_PATH = C:\CamelStudio\CamelStudioRelease7-15-2017\CamelStudio\compiler\bin
+COMPILER_PATH = /Applications/mips-netbsd-elf/bin
 TARGET = Motor_Controller
 TARGET_ADDRESS = 10000000
 DATA_ADDRESS = 01000010
 RODATA_ADDRESS = 
 ARCHITECT = standalone
 AUTOLOAD = false
-C_SOURCES = Motor_Controller.c 
-//A_SOURCES = 
+//C_SOURCES = 
+A_SOURCES = M2_IO_PWM.s 
 //HEADERS = 
 //DEBUG = 
 //CUSTOM_LIBRARY = 
