@@ -1,6 +1,30 @@
 {
     "configurations": [
         {
+            "name": "Mac",
+            "includePath": [
+                "/Applications/CamelStudio.app/Contents/MacOS/include/M2",
+                "/usr/include",
+                "/usr/local/include",
+                "${workspaceRoot}"
+            ],
+            "defines": [],
+            "intelliSenseMode": "clang-x64",
+            "browse": {
+                "path": [
+                    "/usr/include",
+                    "/usr/local/include",
+                    "${workspaceRoot}"
+                ],
+                "limitSymbolsToIncludedHeaders": true,
+                "databaseFilename": ""
+            },
+            "macFrameworkPath": [
+                "/System/Library/Frameworks",
+                "/Library/Frameworks"
+            ]
+        },
+        {
             "name": "Win32",
             "includePath": [
                 "C:/CamelStudio/CamelStudioRelease7-15-2017/CamelStudio/include/M2",
@@ -24,30 +48,6 @@
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": ""
             }
-        },
-        {
-            "name": "Mac",
-            "includePath": [
-                "/Applications/CamelStudio.app/Contents/MacOS/include/M2",
-                "/usr/include",
-                "/usr/local/include",
-                "${workspaceRoot}"
-            ],
-            "defines": [],
-            "intelliSenseMode": "clang-x64",
-            "browse": {
-                "path": [
-                    "/usr/include",
-                    "/usr/local/include",
-                    "${workspaceRoot}"
-                ],
-                "limitSymbolsToIncludedHeaders": true,
-                "databaseFilename": ""
-            },
-            "macFrameworkPath": [
-                "/System/Library/Frameworks",
-                "/Library/Frameworks"
-            ]
         },
         {
             "name": "Linux",
