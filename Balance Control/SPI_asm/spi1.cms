@@ -1,0 +1,14 @@
+TECH = M2
+COMPILER_PATH = /Applications/mips-netbsd-elf/bin
+TARGET = spi1
+TARGET_ADDRESS = 10000000
+DATA_ADDRESS = 01000010
+RODATA_ADDRESS =
+ARCHITECT = standalone
+AUTOLOAD = false
+C_SOURCES = spi1_test.c
+A_SOURCES = spi1.s
+HEADERS = spi1.h
+//DEBUG =
+//CUSTOM_LIBRARY =
+//LIBRARY =

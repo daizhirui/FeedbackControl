@@ -1,0 +1,14 @@
+TECH = M3
+COMPILER_PATH = /usr/local/mips-netbsd-elf/bin
+TARGET = M3_EncoderReader
+TARGET_ADDRESS = 10000000
+DATA_ADDRESS = 01000010
+RODATA_ADDRESS = 
+ARCHITECT = standalone
+AUTOLOAD = false
+C_SOURCES = mainV3.c 
+//A_SOURCES = 
+//HEADERS = 
+//DEBUG = 
+//CUSTOM_LIBRARY = 
+LIBRARY = UART1 

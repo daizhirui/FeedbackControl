@@ -6,6 +6,14 @@
 # PROJECT: Balance Control System
 # COPYRIGHT: FDU
 # REGISTER USAGE: $v0, $v1, $a0, $ra
+# EXTERNAL REGISTER USAGE:
+#   U1_CTL0_REG         0x1f800804
+#   SPI_READ_REG        0x1f800d00
+#   SPI_BUSY_REG        0x1f800d01
+#   SPI_WRITE_REG       0x1f800d02
+#   SPI_IRQACK_REG      0x1f800d03
+#   SPI_CTL_REG         0x1f800d04
+#   SPI_DATA_RDY_REG    0x1f800d05
 # DESCRIPTION:
 #   There are 3 functions in this library.
 #   They are listed in spi.h
@@ -38,6 +46,8 @@ set_master:
 set_slave:
     sb    $0,  4($v0)                   # SPI_CTL_REG = 0x0, SPI slave enable
 exit_spi_mode_set:
+    li    $v1, 0x6                      # $v1 = 6
+    sb    $v1, 3($v0)                   # SPI_IRQACK_REG = 0x6, clear SPI irq
     jr    $ra                           # jump to $ra
     nop
     .set      reorder
@@ -48,7 +58,7 @@ exit_spi_mode_set:
     .ent      spi_master_write
     .type     spi_master_write, @function
 ####################################
-# This is spi_master_write entrance.
+# This is spi_write entrance.
 ####################################
 spi_master_write:
     .set      noreorder
@@ -65,13 +75,41 @@ spi_waite_1:
     lw    $v1, 1($v0)                   # $v1 = SPI_BUSY_REG, check if SPI is busy
     bgtz  $v1, spi_waite_1              # brach to spi_waite_1 if ($v1 > 0)
     ori   $v1, $0, 0x4                  # $v1 = 0x4
-    sb    $v1, 4($v0)                   # SPI_CTL_REG = 0x4, cs off, release slave
-    sb    $v1, 3($v0)                   # SPI_IRQACK_REG = 0x4, clear SPI irq
+#    sb    $v1, 4($v0)                   # SPI_CTL_REG = 0x4, cs off, release slave
+#    sb    $v1, 3($v0)                   # SPI_IRQACK_REG = 0x4, clear SPI irq
     jr    $ra                           # jump to $ra
     nop
     .set      reorder
     .end      spi_master_write
     .size     spi_master_write, .-spi_master_write
+####################################
+# This is spi_slave_write entrance.
+# slave will not wait after a byte is writen in to SPI_WRITE_REG.
+####################################
+    .align    2
+    .globl    spi_slave_write
+    .ent      spi_slave_write
+    .type     spi_slave_write, @function
+spi_slave_write:
+    .set      noreorder
+    li    $v0, 0x1f800d00               # load SPI_READ_REG address
+    ori   $v1, $0, 0x6                  # Sv1 = 6
+    sb    $v1, 3($v0)                   # SPI_IRQACK_REG = 0x6, clear SPI irq
+spi_waite_2:
+    lw    $v1, 1($v0)                   # $v1 = SPI_BUSY_REG, check if SPI is busy
+    bgtz  $v1, spi_waite_2              # brach to spi_waite_2 if ($v1 > 0)
+    nop
+    sb    $a0, 2($v0)                   # SPI_WRITE_REG = $a0, send the data
+spi_waite_3:
+    lw    $v1, 1($v0)                   # $v1 = SPI_BUSY_REG, check if SPI is busy
+    bgtz  $v1, spi_waite_3              # brach to spi_waite_3 if ($v1 > 0)
+    ori   $v1, $0, 0x4                  # $v1 = 0x4
+    sb    $v1, 3($v0)                   # SPI_IRQACK_REG = 0x4, clear SPI irq
+    jr    $ra                           # jump to $ra
+    nop
+    .set      reorder
+    .end      spi_slave_write
+    .size     spi_slave_write, .-spi_slave_write
     .align    2
     .globl    spi_read
     .ent      spi_read
